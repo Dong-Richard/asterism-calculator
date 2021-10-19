@@ -37,7 +37,9 @@ public class Asterism {
     public void generateLines(Line[] lines) {
         this.lines = new Line[lines.length];
         for (int i = 0; i < lines.length; i++) {
-            this.lines[i] = new Line(this.transformX(lines[i].getStartX()), this.transformY(lines[i].getStartY()), this.transformX(lines[i].getEndX()), this.transformY(lines[i].getEndY()));
+            double r1 = calculateR(lines[i].getStartY());
+            double r2 = calculateR(lines[i].getEndY());
+            this.lines[i] = new Line(this.transformX(lines[i].getStartX(), r1), this.transformY(lines[i].getStartX(), r1), this.transformX(lines[i].getEndX(), r2), this.transformY(lines[i].getEndX(), r2));
             this.lines[i].setStroke(Color.BLUE);
         }
     }
@@ -49,29 +51,43 @@ public class Asterism {
     public void generateStars(Point2D[] starLocs) {
         this.stars = new Ellipse[starLocs.length];
         for (int i = 0; i < starLocs.length; i++) {
-            this.stars[i] = new Ellipse(this.transformX(starLocs[i].getX()), this.transformY(starLocs[i].getY()), 1, 1);
+            double r = calculateR(starLocs[i].getY());
+            this.stars[i] = new Ellipse(this.transformX(starLocs[i].getX(), r), this.transformY(starLocs[i].getX(), r), 1, 1);
             this.stars[i].setFill(Color.WHITE);
         }
     }
 
     /**
-     * Helper method to transform the Azimuth to coordinates defined in Constants.
+     * Helper method to determine the distance R from the zenith.
      *
-     * @param initX initial aziumth in degrees
-     * @return transformed x coordinate
+     * @param Altitude Altitude of the point
+     * @return
      */
-    public double transformX(double initX) {
-        return initX / Constants.HOR_FOV * Constants.APP_WIDTH + Constants.NCP_X;
+
+    public double calculateR(double Altitude) {
+        return (90.0-Altitude)*Constants.SCALE_FACTOR;
     }
 
     /**
-     * Helper method to transform the Altitude to coordinates defined in Constants.
+     * Helper method to transform a point's X value given R and Theta
      *
-     * @param initY initial altitude in degrees
-     * @return transformed y coordinate
+     * @param theta Azimuth, in angles
+     * @param R Radius from zenith
+     * @return X value in rectangular coordinates
      */
-    public double transformY(double initY) {
-        return Constants.APP_HEIGHT - initY / Constants.VERT_FOV * Constants.APP_HEIGHT;
+    public double transformX(double theta, double R) {
+        return R*Math.sin(theta*Math.PI/180.0) + Constants.ZENITH_X;
+    }
+
+    /**
+     * Helper method to transform a point's Y value given R theta
+     *
+     * @param theta Azimuth, in angles
+     * @param R Radius from zenith
+     * @return Y value in rectangular coordinates
+     */
+    public double transformY(double theta, double R) {
+        return Constants.ZENITH_Y+R*Math.cos(theta*Math.PI/180.0);
     }
 
     /**

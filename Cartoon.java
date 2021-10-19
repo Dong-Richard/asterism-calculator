@@ -54,12 +54,21 @@ public class Cartoon {
 
         Text introduction = new Text("Welcome to the Planetarium! This program shows the exact locations from " +
                 "Providence, Rhode Island of each star in the brightest Asterisms at the exact time and date displayed.");
+        introduction.setStyle("-fx-font-size: 15");
         Text instructions = new Text("Instructions: Press space to pause, press right to increase speed, press left " +
                 "to decrease speed");
+        instructions.setStyle("-fx-font-size: 15");
+        Text disclaimer = new Text("This animation does not factor in the day/night cycle, seeing conditions, or the" +
+                "individual magnitudes of each star shown (some are brighter than others). " +
+                "\n Planets are also omitted due to retrograde motion being extremely difficult to model with " +
+                "rectangular coordinates. " +
+                "\n Generally, Jupiter is the brightest object in the night sky, with Saturn to its right, and" +
+                " Mars and Venus are bright enough to be seen during sunset");
 
         controlPane.getChildren().add(introduction);
-        controlPane.getChildren().add(quitButton);
         controlPane.getChildren().add(instructions);
+        controlPane.getChildren().add(quitButton);
+        controlPane.getChildren().add(disclaimer);
     }
 
     /**
@@ -76,6 +85,7 @@ public class Cartoon {
         this.masterTime = new BigDecimal(1634616000000L);
         this.timeLabel = new Label(this.time.toString());
         this.timeLabel.setTextFill(Color.WHITE);
+        this.timeLabel.setStyle("-fx-font-size: 25");
 
         shapePane.getChildren().add(this.timeLabel);
 

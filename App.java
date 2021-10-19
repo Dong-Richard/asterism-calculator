@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage stage) {
         // Create top-level object, set up the scene, and show the stage here.
         PaneOrganizer paneOrganizer = new PaneOrganizer();
-        Scene scene = new Scene(paneOrganizer.getRoot(), Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        Scene scene = new Scene(paneOrganizer.getRoot(), Constants.APP_WIDTH, Constants.APP_HEIGHT+Constants.CONTROL_PANE_OFFSET);
         stage.setScene(scene);
         stage.setTitle("Planetarium");
         stage.show();

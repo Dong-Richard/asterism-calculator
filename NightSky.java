@@ -39,6 +39,9 @@ public class NightSky {
 
         asterisms[0] = new Asterism(Constants.UMISTARS, Constants.UMILINES, "Little Dipper");
         asterisms[1] = new Asterism(Constants.UMASTARS, Constants.UMALINES, "Big Dipper");
+        asterisms[2] = new Asterism(Constants.SUMMERTRIANGLESTARS, Constants.SUMMERTRIANGLELINES, "Summer Triangle");
+        asterisms[3] = new Asterism(Constants.CASSTARS, Constants.CASLINES, "Cassiopeia's W");
+        asterisms[4] = new Asterism(Constants.SPRINGTRIANGLESTARS, Constants.SPRINGTRIANGLELINES, "Spring Triangle");
 
         return asterisms;
     }
