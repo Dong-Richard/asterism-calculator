@@ -14,47 +14,25 @@ public class NightSky {
      */
     public NightSky() {
         this.asterisms = new Asterism[Constants.NUM_ASTERISMS];
-        this.addAsterisms();
+
+        this.asterisms[0] = new Asterism(Constants.UMISTARS, Constants.UMILINES, "Little Dipper");
+        this.asterisms[1] = new Asterism(Constants.UMASTARS, Constants.UMALINES, "Big Dipper");
+        this.asterisms[2] = new Asterism(Constants.SUMMERTRIANGLESTARS, Constants.SUMMERTRIANGLELINES, "Summer Triangle");
+        this.asterisms[3] = new Asterism(Constants.CASSTARS, Constants.CASLINES, "Cassiopeia's W");
+        this.asterisms[4] = new Asterism(Constants.SPRINGTRIANGLESTARS, Constants.SPRINGTRIANGLELINES, "Spring Triangle");
     }
 
-    /**
-     * Grabs the initial positions of all of the asterisms, and keeps them in NightSky's asterism array, to be accessed
-     * by Cartoon. We simply create a reference rather than a new object here because we want the changes to each
-     * individual star component to be able to be made through this class.
-     */
-    public void addAsterisms() {
-        Asterism[] initialPositions = this.allAsterisms();
-        for (int i = 0; i < initialPositions.length; i++) {
-            this.asterisms[i] = initialPositions[i];
-        }
-    }
-
-    /**
-     * Helper method for addAsterisms to add all of the asterisms into a single array.
-     *
-     * @return All asterisms defined
-     */
-    public Asterism[] allAsterisms() {
-        Asterism[] asterisms = new Asterism[Constants.NUM_ASTERISMS];
-
-        asterisms[0] = new Asterism(Constants.UMISTARS, Constants.UMILINES, "Little Dipper");
-        asterisms[1] = new Asterism(Constants.UMASTARS, Constants.UMALINES, "Big Dipper");
-        asterisms[2] = new Asterism(Constants.SUMMERTRIANGLESTARS, Constants.SUMMERTRIANGLELINES, "Summer Triangle");
-        asterisms[3] = new Asterism(Constants.CASSTARS, Constants.CASLINES, "Cassiopeia's W");
-        asterisms[4] = new Asterism(Constants.SPRINGTRIANGLESTARS, Constants.SPRINGTRIANGLELINES, "Spring Triangle");
-
-        return asterisms;
-    }
 
     /**
      * For each asterism, each star will be rotated about the North Celestial Pole by the degrees specified. For this,
      * we use the Geometric Rotation Formula, to change the actual positions of each of the stars (since the label's
      * position is dependent on the stars positions).
-     *
+     * <p>
      * For the lines, since we do not need to change the actual positions of the lines, we can simply apply a rotation
      * transformation on each line to transform their coordinate system rather than translating the line.
      *
-     * @param rotationDegree radians by which the object is rotated, clockwise.
+     * @param rotationDegree radians by which the object is rotated, clockwise (initially set to a negative value in
+     *                       constants due to Earth rotating on its axis counterclockwise).
      */
     public void rotate(double rotationDegree) {
 
@@ -70,12 +48,13 @@ public class NightSky {
             for (Line line : asterism.getLines()) {
                 line.getTransforms().add(rotate);
             }
-            asterism.updateLabelPos();
+            asterism.setLabelPos();
         }
     }
 
     /**
      * Getter for the array of Asterisms.
+     *
      * @return
      */
     public Asterism[] getAsterisms() {

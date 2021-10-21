@@ -3,20 +3,30 @@ package cartoon;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
-import javax.print.attribute.standard.MediaSize;
 
 public class Constants {
-    public static final int APP_WIDTH = 1600;
-    public static final int APP_HEIGHT = 800;
-    public static final int CONTROL_PANE_OFFSET = 100;
+    public static final int APP_WIDTH = 1200;
+    public static final int APP_HEIGHT = 850;
+    public static final int CONTROL_PANE_OFFSET = 120;
 
-    public static final double HOR_FOV = 250;
-    public static final double VERT_FOV = 125;
-    public static final double SCALE_FACTOR = APP_HEIGHT/VERT_FOV;
+    public static final String QUIT_BUTTON = "Quit";
+    public static final String INTRODUCTION_STRING = "Welcome to the Planetarium! This program shows the exact" +
+            " locations from Providence, Rhode Island of each star in the brightest Asterisms at the exact time and" +
+            " date displayed.\nBecause these are the brightest asterisms in the sky, if you go outside at the time" +
+            " and day displayed, the sky will look the exact same as the program shows.";
+    public static final String INSTRUCTION_STRING = "Instructions: Press space to pause, press right to increase" +
+            " speed, press left to decrease speed";
+    public static final String DISCLAIMER_STRING = "This animation does not factor in the day/night cycle, seeing" +
+            " conditions, or the individual magnitudes of each star shown. \nPlanets are omitted despite Mars, Venus," +
+            " and Jupiter being the brightest celestial objects due to their difficulty to model in rectangular" +
+            " coordinates ";
 
-    public static final double ROTATION_DEGREE = -1 * (Math.PI / 180.0);
+    public static final double VERT_FOV = 180;
+    public static final double SCALE_FACTOR = APP_HEIGHT / VERT_FOV;
+
+    public static final double ONE_RADIAN_CCW = -1 * (Math.PI / 180.0); //negative value to rotate counter clockwise
     public static final double KEYFRAME_DURATION = .05;
-    public static final long DAY_LEGNTH = 86400000L;
+    public static final long DAY_LENGTH_MILLIS = 86400000L;
 
     public static final double[] MULTIPLIERS = {-16, -8, -4, -2, -1, -.5, -.125, -.05, 0, .05, .125, .5, 1, 2, 4, 8, 16};
     public static final int INITIAL_MULTIPLIER = 12;
@@ -33,7 +43,7 @@ public class Constants {
      * Alt-Az Coordinates of Stars is given at approximately an initial time of 12 am in mid-October.
      * Data was collected from the free software *Stellarium*
      *
-     * Transformations will be performed in the Constellation Class.
+     * Transformations will be performed in the Asterism Class.
      */
 
 
@@ -42,8 +52,8 @@ public class Constants {
      */
 
     //define zenith
-    public static final double ZENITH_X = APP_WIDTH/2;
-    public static final double ZENITH_Y = APP_HEIGHT - 90.0/VERT_FOV *APP_HEIGHT;
+    public static final double ZENITH_X = APP_WIDTH / 2;
+    public static final double ZENITH_Y = APP_HEIGHT - 90.0 / VERT_FOV * APP_HEIGHT;
 
     //define Celestial Pole Coordinates
     public static final double NCP_X = APP_WIDTH / 2;
@@ -92,7 +102,7 @@ public class Constants {
     //define Summer Triangle
     public static final Point2D VEGA = new Point2D(304, 20);
     public static final Point2D ALTAIR = new Point2D(269, 14);
-    public static final Point2D DENEB = new Point2D (297,43);
+    public static final Point2D DENEB = new Point2D(297, 43);
 
     public static final Line VE_AL = new Line(304, 20, 269, 14);
     public static final Line AL_DE = new Line(269, 14, 297, 43);

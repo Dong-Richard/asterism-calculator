@@ -13,13 +13,14 @@ public class PaneOrganizer {
         Pane shapePane = new Pane();
         shapePane.setStyle("-fx-background-color: black");
 
+
         VBox controlPane = new VBox();
         controlPane.setStyle("-fx-background-color: grey");
 
         this.root.setCenter(shapePane);
         this.root.setBottom(controlPane);
 
-        new Cartoon(this.root);
+        new Cartoon(shapePane, controlPane);
     }
 
     public BorderPane getRoot() {

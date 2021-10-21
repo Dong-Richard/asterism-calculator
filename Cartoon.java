@@ -9,10 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -20,25 +22,27 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Cartoon {
-    private final BorderPane root;
+    private final Pane shapePane;
+    private final VBox controlPane;
     private final NightSky sky;
     private Timeline timeline;
     private Label timeLabel;
-    private Date time;
     private BigDecimal masterTime;
-    private final double speed;
     private int multiplierIndex;
 
-    public Cartoon(BorderPane root) {
-        this.root = root;
+    public Cartoon(Pane shapePane, VBox controlPane) {
+        this.shapePane = shapePane;
+        this.controlPane = controlPane;
         this.sky = new NightSky();
-        this.speed = Constants.ROTATION_DEGREE;
         this.multiplierIndex = Constants.INITIAL_MULTIPLIER;
 
-        this.addConstellations();
+        this.addAsterisms();
+        this.addGround();
+        this.addCardinalDirections();
         this.addControl();
-        this.setupTimeline();
         this.addLabel();
+        this.setFocus();
+        this.setupTimeline();
     }
 
     /**
@@ -46,29 +50,20 @@ public class Cartoon {
      * screen.
      */
     private void addControl() {
-        VBox controlPane = (VBox) this.root.getBottom();
-
-        Button quitButton = new Button("Quit");
-        controlPane.setAlignment(Pos.CENTER);
+        Button quitButton = new Button(Constants.QUIT_BUTTON);
+        this.controlPane.setAlignment(Pos.CENTER);
         quitButton.setOnAction((ActionEvent e) -> this.onButtonClicked(e));
 
-        Text introduction = new Text("Welcome to the Planetarium! This program shows the exact locations from " +
-                "Providence, Rhode Island of each star in the brightest Asterisms at the exact time and date displayed.");
+        Text introduction = new Text(Constants.INTRODUCTION_STRING);
         introduction.setStyle("-fx-font-size: 15");
-        Text instructions = new Text("Instructions: Press space to pause, press right to increase speed, press left " +
-                "to decrease speed");
+        Text instructions = new Text(Constants.INSTRUCTION_STRING);
         instructions.setStyle("-fx-font-size: 15");
-        Text disclaimer = new Text("This animation does not factor in the day/night cycle, seeing conditions, or the" +
-                "individual magnitudes of each star shown (some are brighter than others). " +
-                "\n Planets are also omitted due to retrograde motion being extremely difficult to model with " +
-                "rectangular coordinates. " +
-                "\n Generally, Jupiter is the brightest object in the night sky, with Saturn to its right, and" +
-                " Mars and Venus are bright enough to be seen during sunset");
+        Text disclaimer = new Text(Constants.DISCLAIMER_STRING);
 
-        controlPane.getChildren().add(introduction);
-        controlPane.getChildren().add(instructions);
-        controlPane.getChildren().add(quitButton);
-        controlPane.getChildren().add(disclaimer);
+        this.controlPane.getChildren().add(introduction);
+        this.controlPane.getChildren().add(instructions);
+        this.controlPane.getChildren().add(quitButton);
+        this.controlPane.getChildren().add(disclaimer);
     }
 
     /**
@@ -79,25 +74,24 @@ public class Cartoon {
      * Date keeps track of the day, month, year, and time.
      */
     private void addLabel() {
-        Pane shapePane = (Pane) this.root.getCenter();
 
-        this.time = new Date(1634616000000L);
         this.masterTime = new BigDecimal(1634616000000L);
-        this.timeLabel = new Label(this.time.toString());
+        this.timeLabel = new Label(new Date(this.masterTime.longValue()).toString());
         this.timeLabel.setTextFill(Color.WHITE);
         this.timeLabel.setStyle("-fx-font-size: 25");
 
-        shapePane.getChildren().add(this.timeLabel);
+        this.shapePane.getChildren().add(this.timeLabel);
 
     }
 
     /**
      * Exit button code
+     *
      * @param e
      */
     private void onButtonClicked(ActionEvent e) {
         Button button = (Button) e.getSource();
-        if (button.getText() == "Quit")
+        if (button.getText().equals(Constants.QUIT_BUTTON))
             System.exit(0);
     }
 
@@ -115,58 +109,110 @@ public class Cartoon {
      * Rotates the sky (movement due to Earth's motion), then adds the appropriate amount of time that must have passed
      * per degrees that the Earth has rotated. An additional small portion of time is subtracted to keep track of the
      * orbit of the earth around the sun, since the stars in the North Celestial Dome changes as Earth's position changes.
-     *
+     * <p>
      * Then the master time, kept in precise digits using BigDecimal, is truncated to a definite time in seconds by the
      * Date class to display.
      */
     private void updateCartoon() {
-        this.sky.rotate(this.speed * Constants.MULTIPLIERS[this.multiplierIndex]);
-        double degreesPerTick = (2 * Math.PI / (-this.speed * Constants.MULTIPLIERS[this.multiplierIndex]));
-        this.masterTime = this.masterTime.add(new BigDecimal(Constants.DAY_LEGNTH / degreesPerTick));//motion due to rotation of the earth
-        this.masterTime = this.masterTime.subtract(new BigDecimal((Constants.DAY_LEGNTH / 365) / degreesPerTick));//motion due to orbit of the earth
-        this.time.setTime(this.masterTime.longValue());
-        this.timeLabel.setText(this.time.toString());
+        this.sky.rotate(Constants.ONE_RADIAN_CCW * Constants.MULTIPLIERS[this.multiplierIndex]);
+        double degreesPerTick = 2 * Math.PI / (-Constants.ONE_RADIAN_CCW * Constants.MULTIPLIERS[this.multiplierIndex]);
+        //motion due to rotation of the earth
+        this.masterTime = this.masterTime.add(new BigDecimal(Constants.DAY_LENGTH_MILLIS / degreesPerTick));
+        //motion due to orbit of the earth
+        this.masterTime = this.masterTime.subtract(new BigDecimal((Constants.DAY_LENGTH_MILLIS / 365.0) / degreesPerTick));
+        this.timeLabel.setText(new Date(this.masterTime.longValue()).toString());
     }
 
     /**
      * We grab all of the Asterisms available in the night sky, and for each asterism, we add every star and line, and
-     * add its respective name label.
+     * add its respective name label.We also display and label the zenith, cardinal directions, and ground.
      */
-    private void addConstellations() {
-
-        Pane shapePane = (Pane) this.root.getCenter();
-
+    private void addAsterisms() {
+        //add asterisms
         for (int i = 0; i < this.sky.getAsterisms().length; i++) {
             for (int j = 0; j < this.sky.getAsterisms()[i].getLines().length; j++) {
-                shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getLines()[j]);
+                this.shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getLines()[j]);
             }
             for (int j = 0; j < this.sky.getAsterisms()[i].getStars().length; j++) {
-                shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getStars()[j]);
+                this.shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getStars()[j]);
             }
-            shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getName());
+            this.shapePane.getChildren().addAll(this.sky.getAsterisms()[i].getName());
         }
 
-        this.root.getCenter().setFocusTraversable(true);
-        this.root.setOnKeyPressed((KeyEvent e) -> this.onKeyPressed(e));
+        //add zenith label
+        Ellipse zenith = new Ellipse(Constants.ZENITH_X, Constants.ZENITH_Y, 2, 2);
+        zenith.setFill(Color.RED);
+        Text zenithLabel = new Text("Zenith");
+        zenithLabel.setX(Constants.ZENITH_X+3);
+        zenithLabel.setY(Constants.ZENITH_Y+13);
+        zenithLabel.setFill(Color.SKYBLUE);
+
+        shapePane.getChildren().add(zenith);
+        shapePane.getChildren().add(zenithLabel);
     }
 
+    public void addCardinalDirections() {
+        Text north = new Text("N");
+        Text south = new Text("S");
+        Text east = new Text("E");
+        Text west = new Text("W");
+
+        north.setX(Constants.ZENITH_X);
+        north.setY(Constants.ZENITH_Y + 90.0* Constants.SCALE_FACTOR);
+
+        south.setX(Constants.ZENITH_X);
+        south.setY(Constants.ZENITH_Y - 90.0* Constants.SCALE_FACTOR + 10);
+
+        east.setX(Constants.ZENITH_X + 90.0* Constants.SCALE_FACTOR - 10);
+        east.setY(Constants.ZENITH_Y);
+
+        west.setX(Constants.ZENITH_X - 90.0* Constants.SCALE_FACTOR);
+        west.setY(Constants.ZENITH_Y);
+
+        north.setFill(Color.RED);
+        south.setFill(Color.RED);
+        east.setFill(Color.RED);
+        west.setFill(Color.RED);
+
+        shapePane.getChildren().add(north);
+        shapePane.getChildren().add(south);
+        shapePane.getChildren().add(east);
+        shapePane.getChildren().add(west);
+    }
+
+    public void addGround() {
+        Rectangle groundCutOut = new Rectangle(Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        Ellipse ground = new Ellipse(Constants.ZENITH_X, Constants.ZENITH_Y, 90.0* Constants.SCALE_FACTOR,90.0* Constants.SCALE_FACTOR);
+        Shape cutOut = Shape.subtract(groundCutOut, ground);
+        cutOut.setFill(Color.DARKSLATEGRAY);
+
+        shapePane.getChildren().add(cutOut);
+    }
+
+    public void setFocus(){
+        this.shapePane.setFocusTraversable(true);
+        this.shapePane.setOnKeyPressed((KeyEvent e) -> this.onKeyPressed(e));
+    }
 
     /**
      * When Right or Left is pressed, we want to speed to speed up or slow down. Thus, I keep a definite set of
      * multipliers that an index can traverse left and right across to speed up or slow down by some factor.
-     *
+     * <p>
      * Spacebar simply pauses or starts the timeline.
+     *
      * @param e
      */
     private void onKeyPressed(KeyEvent e) {
         KeyCode keyPressed = e.getCode();
         switch (keyPressed) {
             case RIGHT:
-                if (this.multiplierIndex < Constants.MULTIPLIERS.length) {
+                if (this.timeline.getStatus() == Animation.Status.PAUSED) return;
+                if (this.multiplierIndex < Constants.MULTIPLIERS.length - 1) {
                     this.multiplierIndex++;
                 }
                 break;
             case LEFT:
+                if (this.timeline.getStatus() == Animation.Status.PAUSED) return;
                 if (this.multiplierIndex > 0) {
                     this.multiplierIndex--;
                 }
@@ -180,5 +226,6 @@ public class Cartoon {
             default:
                 break;
         }
+        e.consume();
     }
 }
