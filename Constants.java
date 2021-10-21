@@ -29,9 +29,9 @@ public class Constants {
     public static final long DAY_LENGTH_MILLIS = 86400000L;
 
     public static final double[] MULTIPLIERS = {-16, -8, -4, -2, -1, -.5, -.125, -.05, 0, .05, .125, .5, 1, 2, 4, 8, 16};
-    public static final int INITIAL_MULTIPLIER = 12;
+    public static final int INITIAL_MULTIPLIER = 11;
 
-    public static final int NUM_ASTERISMS = 5;
+    public static final int NUM_ASTERISMS = 6;
 
     /**
      * COORDINATE DEFINITIONS:
@@ -61,39 +61,39 @@ public class Constants {
 
     //define Little Dipper
     public static final Point2D POLARIS = new Point2D(0, 42);
-    public static final Point2D YILDUN = new Point2D(355, 40);
-    public static final Point2D EUMI = new Point2D(-9, 36);
-    public static final Point2D ZUMI = new Point2D(-10, 31);
-    public static final Point2D HUMI = new Point2D(-13, 31);
-    public static final Point2D PHERKAD = new Point2D(-12, 26);
-    public static final Point2D KOCHAB = new Point2D(-8, 27);
+    public static final Point2D YILDUN = new Point2D(356, 40);
+    public static final Point2D EUMI = new Point2D(352, 37);
+    public static final Point2D ZUMI = new Point2D(351, 32);
+    public static final Point2D HUMI = new Point2D(347, 31);
+    public static final Point2D PHERKAD = new Point2D(349, 26);
+    public static final Point2D KOCHAB = new Point2D(352, 27);
 
-    public static final Line PO_YI = new Line(0, 42, -5, 40);
-    public static final Line YI_EU = new Line(-5, 40, -9, 36);
-    public static final Line EU_ZU = new Line(-9, 36, -10, 31);
-    public static final Line ZU_HU = new Line(-10, 31, -13, 31);
-    public static final Line HU_PH = new Line(-13, 31, -12, 26);
-    public static final Line PH_KO = new Line(-12, 26, -8, 27);
-    public static final Line KO_ZU = new Line(-8, 27, -10, 31);
+    public static final Line PO_YI = new Line(0, 42, 356, 40);
+    public static final Line YI_EU = new Line(356, 40, 352, 37);
+    public static final Line EU_ZU = new Line(352, 37, 351, 32);
+    public static final Line ZU_HU = new Line(351, 32, 347, 31);
+    public static final Line HU_PH = new Line(347, 31, 349, 26);
+    public static final Line PH_KO = new Line(349, 26, 352, 27);
+    public static final Line KO_ZU = new Line(352, 27, 351, 32);
 
     public static final Point2D[] UMISTARS = {POLARIS, YILDUN, EUMI, ZUMI, HUMI, PHERKAD, KOCHAB};
     public static final Line[] UMILINES = {PO_YI, YI_EU, EU_ZU, ZU_HU, HU_PH, PH_KO, KO_ZU};
 
     //define Big Dipper
-    public static final Point2D ALKAID = new Point2D(-7, 2);
-    public static final Point2D MIZAR = new Point2D(-3, 7);
-    public static final Point2D ALIOTH = new Point2D(1.5, 8);
+    public static final Point2D ALKAID = new Point2D(353, 2);
+    public static final Point2D MIZAR = new Point2D(357, 7);
+    public static final Point2D ALIOTH = new Point2D(2, 8);
     public static final Point2D MEGREZ = new Point2D(7, 9);
-    public static final Point2D PHECDA = new Point2D(10.5, 7);
+    public static final Point2D PHECDA = new Point2D(11, 6);
     public static final Point2D DUBHE = new Point2D(14, 16);
-    public static final Point2D MERAK = new Point2D(17, 11.5);
+    public static final Point2D MERAK = new Point2D(15, 10);
 
-    public static final Line AL_MI = new Line(-7, 2, -3, 7);
-    public static final Line MI_AL = new Line(-3, 7, 1.5, 8);
-    public static final Line AL_MEG = new Line(1.5, 8, 7, 9);
-    public static final Line MEG_PH = new Line(7, 9, 10.5, 7);
-    public static final Line PH_MER = new Line(10.5, 7, 17, 11.5);
-    public static final Line MER_DU = new Line(17, 11.5, 14, 16);
+    public static final Line AL_MI = new Line(353, 2, 357, 7);
+    public static final Line MI_AL = new Line(357, 7, 2, 8);
+    public static final Line AL_MEG = new Line(2, 8, 7, 9);
+    public static final Line MEG_PH = new Line(7, 9, 11, 6);
+    public static final Line PH_MER = new Line(11, 6, 15, 10);
+    public static final Line MER_DU = new Line(15, 10, 14, 16);
     public static final Line DU_MEG = new Line(14, 16, 7, 9);
 
     public static final Point2D[] UMASTARS = {ALKAID, MIZAR, ALIOTH, MEGREZ, PHECDA, DUBHE, MERAK};
@@ -137,4 +137,18 @@ public class Constants {
 
     public static final Point2D[] SPRINGTRIANGLESTARS = {ARCTURUS, SPICA, DENEBOLA};
     public static final Line[] SPRINGTRIANGLELINES = {AR_SP, SP_DE, DE_AR};
+
+    //define Great Square
+    public static final Point2D ALPHERATZ = new Point2D(227, 73);
+    public static final Point2D SCHEAT = new Point2D(251, 62);
+    public static final Point2D MARKAB = new Point2D(233, 53);
+    public static final Point2D ALGENIB = new Point2D(207, 61);
+
+    public static final Line ALPH_SC = new Line(227, 73, 251, 62);
+    public static final Line SC_MA = new Line(251, 62, 233, 53);
+    public static final Line MA_ALGE = new Line(233, 53, 207, 61);
+    public static final Line ALGE_ALPH = new Line(207, 61, 227, 73);
+
+    public static final Point2D[] GREATSQUARESTARS = {ALPHERATZ, SCHEAT, MARKAB, ALGENIB};
+    public static final Line[] GREATSQUARELINES = {ALPH_SC, SC_MA, MA_ALGE, ALGE_ALPH};
 }

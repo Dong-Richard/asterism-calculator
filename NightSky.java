@@ -20,6 +20,7 @@ public class NightSky {
         this.asterisms[2] = new Asterism(Constants.SUMMERTRIANGLESTARS, Constants.SUMMERTRIANGLELINES, "Summer Triangle");
         this.asterisms[3] = new Asterism(Constants.CASSTARS, Constants.CASLINES, "Cassiopeia's W");
         this.asterisms[4] = new Asterism(Constants.SPRINGTRIANGLESTARS, Constants.SPRINGTRIANGLELINES, "Spring Triangle");
+        this.asterisms[5] = new Asterism(Constants.GREATSQUARESTARS, Constants.GREATSQUARELINES, "Great Square of Pegasus");
     }
 
 

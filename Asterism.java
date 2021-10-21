@@ -23,8 +23,8 @@ public class Asterism {
      * @param name     Name of the asterism
      */
     public Asterism(Point2D[] starLocs, Line[] lines, String name) {
-        this.generateLines(lines);
         this.generateStars(starLocs);
+        this.generateLines(lines);
         this.name = new Text(name);
         this.name.setFill(Color.SKYBLUE);
         this.setLabelPos();
