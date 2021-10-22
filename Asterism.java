@@ -62,8 +62,7 @@ public class Asterism {
         for (int i = 0; i < starLocs.length; i++) {
             double r = this.calculateR(starLocs[i].getY());
             this.stars[i] = new Ellipse(this.transformX(starLocs[i].getX(), r),
-                    this.transformY(starLocs[i].getX(), r)
-                    , 1, 1);
+                    this.transformY(starLocs[i].getX(), r), 1, 1);
             this.stars[i].setFill(Color.WHITE);
         }
     }

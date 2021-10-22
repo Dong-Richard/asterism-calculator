@@ -4,9 +4,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Top-Level graphical class. Handles the creation of all panes in the program.
+ */
 public class PaneOrganizer {
     private final BorderPane root;
 
+
+    /**
+     * Creates the overall borderpane, and adds the shape pane and control pane to its center and bottom.
+     */
     public PaneOrganizer() {
         this.root = new BorderPane();
 

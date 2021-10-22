@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+    // Create top-level object, set up the scene, and show the stage here.
     @Override
     public void start(Stage stage) {
         PaneOrganizer paneOrganizer = new PaneOrganizer();

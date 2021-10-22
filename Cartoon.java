@@ -71,7 +71,7 @@ public class Cartoon {
 
     /**
      * We grab all of the Asterisms available in the night sky, and for each asterism, we add every star and line, and
-     * add its respective name label.We also display and label the zenith, cardinal directions, and ground.
+     * add its respective name label.
      */
     private void addAsterisms() {
         //add asterisms
@@ -139,7 +139,8 @@ public class Cartoon {
      */
     private void addGround() {
         Rectangle groundCutOut = new Rectangle(Constants.APP_WIDTH, Constants.CARTOON_PANE_HEIGHT);
-        Ellipse ground = new Ellipse(Constants.ZENITH_X, Constants.ZENITH_Y, 90.0 * Constants.SCALE_FACTOR, 90.0 * Constants.SCALE_FACTOR);
+        Ellipse ground = new Ellipse(Constants.ZENITH_X, Constants.ZENITH_Y,
+                90.0 * Constants.SCALE_FACTOR, 90.0 * Constants.SCALE_FACTOR);
         Shape cutOut = Shape.subtract(groundCutOut, ground);
         cutOut.setFill(Color.DARKSLATEGRAY);
 
@@ -158,14 +159,10 @@ public class Cartoon {
         Text introduction = new Text(Constants.INTRODUCTION_STRING);
         Text instructions = new Text(Constants.INSTRUCTION_STRING);
         instructions.setFill(Color.BLUE);
-        Text disclaimer = new Text(Constants.DISCLAIMER_STRING);
-        disclaimer.setStyle("-fx-font-size: 10");
-        disclaimer.setFill(Color.DARKRED);
 
         this.controlPane.getChildren().add(introduction);
         this.controlPane.getChildren().add(instructions);
         this.controlPane.getChildren().add(quitButton);
-        //this.controlPane.getChildren().add(disclaimer);
     }
 
     /**
@@ -208,16 +205,6 @@ public class Cartoon {
     }
 
     /**
-     * Sets the focus to the shapePane.
-     */
-    private void setFocus() {
-        this.shapePane.requestFocus();
-        this.shapePane.setFocusTraversable(true);
-        this.shapePane.setOnKeyPressed((KeyEvent e) -> this.onKeyPressed(e));
-    }
-
-
-    /**
      * Rotates the sky (movement due to Earth's motion), then adds the appropriate amount of time that must have passed
      * per degrees that the Earth has rotated. An additional small portion of time is subtracted to keep track of the
      * orbit of the earth around the sun, since the stars in the North Celestial Dome changes as Earth's position changes.
@@ -233,6 +220,15 @@ public class Cartoon {
         //motion due to orbit of the earth
         this.masterTime = this.masterTime.subtract(new BigDecimal((Constants.DAY_LENGTH_MILLIS / 365.0) / timeFractionPerTick));
         this.timeLabel.setText(new Date(this.masterTime.longValue()).toString());
+    }
+
+    /**
+     * Sets the focus to the shapePane.
+     */
+    private void setFocus() {
+        this.shapePane.requestFocus();
+        this.shapePane.setFocusTraversable(true);
+        this.shapePane.setOnKeyPressed((KeyEvent e) -> this.onKeyPressed(e));
     }
 
     /**

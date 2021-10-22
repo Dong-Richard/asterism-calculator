@@ -4,7 +4,9 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 
-
+/**
+ * The top-level composite shape class. Models the entire night sky as an array of asterisms.
+ */
 public class NightSky {
 
     private final Asterism[] asterisms; //the night sky contains all of the asterisms

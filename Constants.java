@@ -15,8 +15,6 @@ public class Constants {
             "Rhode Island.";
     public static final String INSTRUCTION_STRING = "Instructions: Space to pause, Right arrow key to " +
             "increase speed forward in time, Left arrow key to increase speed backwards in time";
-    public static final String DISCLAIMER_STRING = "DISCLAIMER: This animation does not show the day/night cycle," +
-            " star magnitudes, or planets, despite being obvious to the naked eye.";
 
     public static final double VERT_FOV = 180;
     public static final double SCALE_FACTOR = CARTOON_PANE_HEIGHT / VERT_FOV;
@@ -50,11 +48,11 @@ public class Constants {
 
     //define zenith
     public static final double ZENITH_X = APP_WIDTH / 2;
-    public static final double ZENITH_Y = CARTOON_PANE_HEIGHT - 90.0 / VERT_FOV * CARTOON_PANE_HEIGHT;
+    public static final double ZENITH_Y = CARTOON_PANE_HEIGHT - 90.0 * SCALE_FACTOR;
 
     //define Celestial Pole Coordinates
     public static final double NCP_X = APP_WIDTH / 2;
-    public static final double NCP_Y = CARTOON_PANE_HEIGHT - 41.8 / VERT_FOV * CARTOON_PANE_HEIGHT;
+    public static final double NCP_Y = CARTOON_PANE_HEIGHT - 41.8 * SCALE_FACTOR;
 
     //define Little Dipper
     public static final Point2D POLARIS = new Point2D(0, 42);

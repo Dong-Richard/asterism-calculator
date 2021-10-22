@@ -60,6 +60,9 @@ My Cartoon has 6 classes which interact in the following ways:
         transformY(line 100) methods. We can draw a right triangle with the r being the line from the zenith to the
         star, and theta being the azimuth of the star. From this triangle, we can see that the Y value of the star's
         position is rcos(theta) and the X value being rsin(theta).
+        - Using these definitions, and the fact that the NCP and Zenith both lie on the line where theta = 0, the Y
+        value of each of these points are the same as for a star at 90 degrees Altitude (Zenith) and 41.8 degrees
+        Altitude (NCP at Providence).
         - Lines are Java Lines with the endpoints being the points of the two stars that the line connects. The same
         transformation is applied on both ends of the line.
 
@@ -110,7 +113,8 @@ My Cartoon has 6 classes which interact in the following ways:
 
     - In the Cartoon class, the value 90.0 was hard coded into the ellipse of the ground (line 142). This is because the
     circle's radius is 90 degrees, regardless of window size or apparent FOV, and so must be 90.0 and cannot be
-    represented with other constants.
+    represented with other constants. For example, if the window was to show a vertical FOV of 90 degrees, the night
+    sky should appear as the bottom half of a semicircle.
     - THE WINDOW CANNOT BE RESIZED DURING RUNTIME. If you click "fullscreen" on the window the dimensions will be
     messed up since the code does not dynamically resize the graphical elements. To get a bigger window you have to
     change the app size in Constants.
@@ -126,14 +130,8 @@ My Cartoon has 6 classes which interact in the following ways:
     and to the right of the observer, respectively. These points may not all be visible if the user decides to change
     the apparent FOV of the program to be smaller than the full celestial dome.
 
-KNOWN BUGS:
-    - All of my star coordinates are whole number values of degrees for both Altitude and Azimuth, while in real life,
-    they are described in more precise measurements called arcseconds, which is 1/3600th of a degree. This means that
-    the exact positions of the stars aren't exactly precise to their real life measurements.
-    - If the window is resized while the program is running, the ground and nightsky ellipse will not resize according
-    to the new window size, since they are based on the hard-coded APP_HEIGHT and APP_WIDTH. Likewise, the stars will
-    remain where they are.
+KNOWN BUGS: None/
 
-Debugging Collaborators: N/a
+Debugging Collaborators: None
 
 Hours Spent: 18
