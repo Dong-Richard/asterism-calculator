@@ -5,40 +5,37 @@ import javafx.scene.shape.Line;
 
 
 public class Constants {
-    public static final int APP_WIDTH = 1200;
-    public static final int APP_HEIGHT = 850;
-    public static final int CONTROL_PANE_OFFSET = 120;
+    public static final int APP_WIDTH = 700;
+    public static final int CARTOON_PANE_HEIGHT = 527;
+    public static final int APP_HEIGHT = 600;
 
     public static final String QUIT_BUTTON = "Quit";
     public static final String INTRODUCTION_STRING = "Welcome to the Planetarium! This program shows the exact" +
-            " locations from Providence, Rhode Island of each star in the brightest Asterisms at the exact time and" +
-            " date displayed.\nBecause these are the brightest asterisms in the sky, if you go outside at the time" +
-            " and day displayed, the sky will look the exact same as the program shows.";
-    public static final String INSTRUCTION_STRING = "Instructions: Press space to pause, press right to increase" +
-            " speed, press left to decrease speed";
-    public static final String DISCLAIMER_STRING = "This animation does not factor in the day/night cycle, seeing" +
-            " conditions, or the individual magnitudes of each star shown. \nPlanets are omitted despite Mars, Venus," +
-            " and Jupiter being the brightest celestial objects due to their difficulty to model in rectangular" +
-            " coordinates ";
+            " locations of the brightest\n Asterisms at the exact time and date displayed, as seen from Providence, " +
+            "Rhode Island.";
+    public static final String INSTRUCTION_STRING = "Instructions: Space to pause, Right arrow key to " +
+            "increase speed forward in time, Left arrow key to increase speed backwards in time";
+    public static final String DISCLAIMER_STRING = "DISCLAIMER: This animation does not show the day/night cycle," +
+            " star magnitudes, or planets, despite being obvious to the naked eye.";
 
     public static final double VERT_FOV = 180;
-    public static final double SCALE_FACTOR = APP_HEIGHT / VERT_FOV;
+    public static final double SCALE_FACTOR = CARTOON_PANE_HEIGHT / VERT_FOV;
 
     public static final double ONE_RADIAN_CCW = -1 * (Math.PI / 180.0); //negative value to rotate counter clockwise
     public static final double KEYFRAME_DURATION = .05;
     public static final long DAY_LENGTH_MILLIS = 86400000L;
 
     public static final double[] MULTIPLIERS = {-16, -8, -4, -2, -1, -.5, -.125, -.05, 0, .05, .125, .5, 1, 2, 4, 8, 16};
-    public static final int INITIAL_MULTIPLIER = 11;
+    public static final int INITIAL_MULTIPLIER_INDEX = 11;
 
-    public static final int NUM_ASTERISMS = 6;
+    public static final int NUM_ASTERISMS = 8;
 
     /**
      * COORDINATE DEFINITIONS:
      * I will be using Alt-Az coordinates to describe the locations of stars. I would like the app frame to show
-     * an apparent field of view of 125 degrees altitude and 250 degrees azimuth. Since the NCP in Providence, Rhode
-     * Island is at approximately 0/40 az./alt, I will arbitrarily decide 0 degrees azimuth to be in the horizontal
-     * center of the app window, and 0 degrees altitude to be at the bottom of the app window.
+     * the entire celestial Dome. Since the NCP in Providence, Rhode Island is at approximately 0/40 az./alt,
+     * I will arbitrarily decide 0 degrees azimuth to be in the horizontal center of the app window, and 90 degrees
+     * altitude to be at the bottom of the app window.
      *
      * Alt-Az Coordinates of Stars is given at approximately an initial time of 12 am in mid-October.
      * Data was collected from the free software *Stellarium*
@@ -53,11 +50,11 @@ public class Constants {
 
     //define zenith
     public static final double ZENITH_X = APP_WIDTH / 2;
-    public static final double ZENITH_Y = APP_HEIGHT - 90.0 / VERT_FOV * APP_HEIGHT;
+    public static final double ZENITH_Y = CARTOON_PANE_HEIGHT - 90.0 / VERT_FOV * CARTOON_PANE_HEIGHT;
 
     //define Celestial Pole Coordinates
     public static final double NCP_X = APP_WIDTH / 2;
-    public static final double NCP_Y = APP_HEIGHT - 40.0 / VERT_FOV * APP_HEIGHT;
+    public static final double NCP_Y = CARTOON_PANE_HEIGHT - 41.8 / VERT_FOV * CARTOON_PANE_HEIGHT;
 
     //define Little Dipper
     public static final Point2D POLARIS = new Point2D(0, 42);
@@ -151,4 +148,44 @@ public class Constants {
 
     public static final Point2D[] GREATSQUARESTARS = {ALPHERATZ, SCHEAT, MARKAB, ALGENIB};
     public static final Line[] GREATSQUARELINES = {ALPH_SC, SC_MA, MA_ALGE, ALGE_ALPH};
+
+    //define Winter Hexagon
+    public static final Point2D CAPELLA = new Point2D(62, 46);
+    public static final Point2D POLLUX = new Point2D(62, 11);
+    public static final Point2D PROCYON = new Point2D(80, -2);
+    public static final Point2D SIRIUS = new Point2D(106, -8);
+    public static final Point2D RIGEL = new Point2D(115, 14);
+    public static final Point2D ALDEBARAN = new Point2D(103, 38);
+
+    public static final Line CA_PO = new Line(62, 46, 62, 11);
+    public static final Line PO_PR = new Line(62, 11, 80, -2);
+    public static final Line PR_SI = new Line(80, -2, 106, -8);
+    public static final Line SI_RI = new Line(106, -8, 115, 14);
+    public static final Line RI_AL = new Line(115, 14, 103, 38);
+    public static final Line AL_CA = new Line(103, 38, 62, 46);
+
+    public static final Point2D[] WINTERHEXAGONSTARS = {CAPELLA, POLLUX, PROCYON, SIRIUS, RIGEL, ALDEBARAN};
+    public static final Line[] WINTERHEXAGONLINES = {CA_PO, PO_PR, PR_SI, SI_RI, RI_AL, AL_CA};
+
+    //define Orion
+    public static final Point2D BETELGEUSE = new Point2D(96, 18);
+    public static final Point2D BELLATRIX = new Point2D(102, 23);
+    public static final Point2D SAIPH = new Point2D(110, 8);
+    public static final Point2D ALNITAK = new Point2D(106, 14);
+    public static final Point2D ALNILAM = new Point2D(106, 16);
+    public static final Point2D MINTAKA = new Point2D(106, 17);
+
+    public static final Line BET_ALNIT = new Line(96, 18, 106, 14);
+    public static final Line ALNIT_SA = new Line(106, 14, 110, 8);
+    public static final Line SA_RI = new Line(110, 8, 115, 14);
+    public static final Line RI_MI = new Line(115, 14, 106, 17);
+    public static final Line MI_BEL = new Line(106, 17, 102, 23);
+    public static final Line ALNIT_ALNIL = new Line(106, 14, 106, 16);
+    public static final Line ALNIL_MI = new Line(106, 16, 106, 17);
+    public static final Line BEL_BET = new Line(102, 23, 96, 18);
+
+    public static final Point2D[] ORIONSTARS = {BETELGEUSE, BELLATRIX, RIGEL, SAIPH, ALNILAM, ALNITAK, MINTAKA};
+    public static final Line[] ORIONLINES = {BET_ALNIT, ALNIT_SA, SA_RI, RI_MI, MI_BEL, ALNIT_ALNIL, ALNIL_MI, BEL_BET};
+
+
 }

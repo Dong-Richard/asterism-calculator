@@ -6,6 +6,9 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
+/**
+ * Low-level composite shape class, contains the stars, lines, and name of any given asterism.
+ */
 public class Asterism {
     /**
      * Each asterism has stars, lines that connect the stars, and a name
@@ -27,6 +30,7 @@ public class Asterism {
         this.generateLines(lines);
         this.name = new Text(name);
         this.name.setFill(Color.SKYBLUE);
+        this.name.setStyle("-fx-font-size: 10");
         this.setLabelPos();
     }
 
@@ -35,7 +39,7 @@ public class Asterism {
      *
      * @param lines
      */
-    public void generateLines(Line[] lines) {
+    private void generateLines(Line[] lines) {
         this.lines = new Line[lines.length];
         for (int i = 0; i < lines.length; i++) {
             double r1 = this.calculateR(lines[i].getStartY());
@@ -51,9 +55,9 @@ public class Asterism {
     /**
      * Helper method to generate all stars of the asterism graphically and logically.
      *
-     * @param starLocs
+     * @param starLocs array of the locations of the stars to be generated
      */
-    public void generateStars(Point2D[] starLocs) {
+    private void generateStars(Point2D[] starLocs) {
         this.stars = new Ellipse[starLocs.length];
         for (int i = 0; i < starLocs.length; i++) {
             double r = this.calculateR(starLocs[i].getY());
@@ -67,12 +71,12 @@ public class Asterism {
     /**
      * Helper method to determine the distance R from the zenith.
      *
-     * @param Altitude Altitude of the point
-     * @return
+     * @param altitude Altitude of the point
+     * @return Radius to the zenith
      */
 
-    public double calculateR(double Altitude) {
-        return (90.0 - Altitude) * Constants.SCALE_FACTOR;
+    private double calculateR(double altitude) {
+        return (90.0 - altitude) * Constants.SCALE_FACTOR;
     }
 
     /**
@@ -82,7 +86,7 @@ public class Asterism {
      * @param R     Radius from zenith
      * @return X value in rectangular coordinates
      */
-    public double transformX(double theta, double R) {
+    private double transformX(double theta, double R) {
         return R * Math.sin(theta * Math.PI / 180.0) + Constants.ZENITH_X;
     }
 
@@ -93,7 +97,7 @@ public class Asterism {
      * @param R     Radius from zenith
      * @return Y value in rectangular coordinates
      */
-    public double transformY(double theta, double R) {
+    private double transformY(double theta, double R) {
         return Constants.ZENITH_Y + R * Math.cos(theta * Math.PI / 180.0);
     }
 

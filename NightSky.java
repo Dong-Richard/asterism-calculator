@@ -21,6 +21,8 @@ public class NightSky {
         this.asterisms[3] = new Asterism(Constants.CASSTARS, Constants.CASLINES, "Cassiopeia's W");
         this.asterisms[4] = new Asterism(Constants.SPRINGTRIANGLESTARS, Constants.SPRINGTRIANGLELINES, "Spring Triangle");
         this.asterisms[5] = new Asterism(Constants.GREATSQUARESTARS, Constants.GREATSQUARELINES, "Great Square of Pegasus");
+        this.asterisms[6] = new Asterism(Constants.WINTERHEXAGONSTARS, Constants.WINTERHEXAGONLINES, "Winter Hexagon");
+        this.asterisms[7] = new Asterism(Constants.ORIONSTARS, Constants.ORIONLINES, "Orion's Belt and Shield");
     }
 
 
