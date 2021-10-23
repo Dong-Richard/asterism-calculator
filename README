@@ -67,7 +67,7 @@ My Cartoon has 6 classes which interact in the following ways:
         transformation is applied on both ends of the line.
 
     b. CALCULATIONS FOR THE SPEED OF TIME PASSING:
-        - In the Cartoon class, the updateCartoon() method (line 225) contains the logic for determining the amount of
+        - In the Cartoon class, the updateCartoon() method (line 215) contains the logic for determining the amount of
         time that passes.
         - Because a day passes every time the sky has rotated 2pi radians, we need to find how many radians have passed
         during the tick, then find out what percentage of a full day's rotation that is, and then multiply that by
@@ -92,8 +92,9 @@ My Cartoon has 6 classes which interact in the following ways:
         transformation is because the name label is set to the average position of all of the stars, and the rotation
         transformation simple changes the Node's coordinate system through the change of basis formula from Linear
         Algebra.
-        - Because no positions are based off of the position of the lines, we can apply a simply rotation transformation
-        through the Java Rotate class.
+        - We use the same rotation formula for lines rather than using a Rotation Class since the rotation classes will
+        quickly pile up, slowing down the program due to increasing the amount of memory needed to store the
+        transformations in the internal collection.
 
  II. MODULARITY OF THE PROGRAM
 
@@ -111,10 +112,8 @@ My Cartoon has 6 classes which interact in the following ways:
 
  III. MISCELLANEOUS OTHER DESIGN CHOICES
 
-    - In the Cartoon class, the value 90.0 was hard coded into the ellipse of the ground (line 142). This is because the
-    circle's radius is 90 degrees, regardless of window size or apparent FOV, and so must be 90.0 and cannot be
-    represented with other constants. For example, if the window was to show a vertical FOV of 90 degrees, the night
-    sky should appear as the bottom half of a semicircle.
+    - In the Constants class, I define ZENITH_ALTITUDE as 90.0 because the zenith must be 90 degrees altitude
+    regardless of the window size or the apparent field of view.
     - THE WINDOW CANNOT BE RESIZED DURING RUNTIME. If you click "fullscreen" on the window the dimensions will be
     messed up since the code does not dynamically resize the graphical elements. To get a bigger window you have to
     change the app size in Constants.
@@ -122,7 +121,7 @@ My Cartoon has 6 classes which interact in the following ways:
     because I want the app to be able to run both forwards in time, and backwards in time in a varying number of
     rates. I consider this method of simply moving the index head a more elegant solution than using a seperate
     instance variable to keep track of speed, and flipping the sign after it crosses a certain threshold manually.
-    - In the onKeyPressed method (line 247), I do not allow the speed to be changed while the program is paused to
+    - In the onKeyPressed method (line 243), I do not allow the speed to be changed while the program is paused to
     try to minimize user error.
     - NORTH was arbitrarily decided to be on the bottom of the circle. Since I want the program to be aligned with
     North towards the front, and the NCP is closest to the bottom of the screen, I defined North to be the bottom

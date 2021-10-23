@@ -55,7 +55,7 @@ public class Cartoon {
         this.addNightSky();
         this.addControl();
         this.addTimeLabel();
-        this.setFocus();
+        this.setupFocusAndKeyHandler();
         this.setupTimeline();
     }
 
@@ -111,15 +111,15 @@ public class Cartoon {
         Text west = new Text("W");
 
         north.setX(Constants.ZENITH_X);
-        north.setY(Constants.ZENITH_Y + 90.0 * Constants.SCALE_FACTOR);
+        north.setY(Constants.ZENITH_Y + Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR);
 
         south.setX(Constants.ZENITH_X);
-        south.setY(Constants.ZENITH_Y - 90.0 * Constants.SCALE_FACTOR + 10);
+        south.setY(Constants.ZENITH_Y - Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR + 10);
 
-        east.setX(Constants.ZENITH_X + 90.0 * Constants.SCALE_FACTOR - 10);
+        east.setX(Constants.ZENITH_X + Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR - 10);
         east.setY(Constants.ZENITH_Y);
 
-        west.setX(Constants.ZENITH_X - 90.0 * Constants.SCALE_FACTOR);
+        west.setX(Constants.ZENITH_X - Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR);
         west.setY(Constants.ZENITH_Y);
 
         north.setFill(Color.RED);
@@ -138,9 +138,10 @@ public class Cartoon {
      * ground, and leaves a black circle in the middle.
      */
     private void addGround() {
-        Rectangle groundCutOut = new Rectangle(Constants.APP_WIDTH, Constants.CARTOON_PANE_HEIGHT);
+        Rectangle groundCutOut = new Rectangle(Constants.APP_WIDTH*2, Constants.CARTOON_PANE_HEIGHT*2);
         Ellipse ground = new Ellipse(Constants.ZENITH_X, Constants.ZENITH_Y,
-                90.0 * Constants.SCALE_FACTOR, 90.0 * Constants.SCALE_FACTOR);
+                Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR,
+                Constants.ZENITH_ALTITUDE * Constants.SCALE_FACTOR);
         Shape cutOut = Shape.subtract(groundCutOut, ground);
         cutOut.setFill(Color.DARKSLATEGRAY);
 
@@ -225,7 +226,7 @@ public class Cartoon {
     /**
      * Sets the focus to the shapePane.
      */
-    private void setFocus() {
+    private void setupFocusAndKeyHandler() {
         this.shapePane.requestFocus();
         this.shapePane.setFocusTraversable(true);
         this.shapePane.setOnKeyPressed((KeyEvent e) -> this.onKeyPressed(e));

@@ -1,5 +1,6 @@
 package cartoon;
 
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
@@ -33,28 +34,44 @@ public class NightSky {
      * we use the Geometric Rotation Formula, to change the actual positions of each of the stars (since the label's
      * position is dependent on the stars positions).
      * <p>
-     * For the lines, since we do not need to change the actual positions of the lines, we can simply apply a rotation
-     * transformation on each line to transform their coordinate system rather than translating the line.
+     * For the lines, we simply perform the same rotation on its independant starting and ending points.
      *
-     * @param rotationDegree radians by which the object is rotated, clockwise (initially set to a negative value in
+     * @param rotationRadians radians by which the object is rotated, clockwise (initially set to a negative value in
      *                       constants due to Earth rotating on its axis counterclockwise).
      */
-    public void rotate(double rotationDegree) {
-
-        Rotate rotate = new Rotate(rotationDegree * 180 / Math.PI, Constants.NCP_X, Constants.NCP_Y);
+    public void rotate(double rotationRadians) {
 
         for (Asterism asterism : this.asterisms) {
             for (Ellipse star : asterism.getStars()) {
-                double tempX = star.getCenterX() - Constants.NCP_X;
-                double tempY = star.getCenterY() - Constants.NCP_Y;
-                star.setCenterX(tempX * Math.cos(rotationDegree) - tempY * Math.sin(rotationDegree) + Constants.NCP_X);
-                star.setCenterY(tempX * Math.sin(rotationDegree) + tempY * Math.cos(rotationDegree) + Constants.NCP_Y);
+                Point2D rotatedPoint = rotatePoint(star.getCenterX(), star.getCenterY(), rotationRadians);
+                star.setCenterX(rotatedPoint.getX());
+                star.setCenterY(rotatedPoint.getY());
             }
             for (Line line : asterism.getLines()) {
-                line.getTransforms().add(rotate);
+                Point2D rotatedStart = rotatePoint(line.getStartX(),line.getStartY(),rotationRadians);
+                Point2D rotatedEnd = rotatePoint(line.getEndX(),line.getEndY(),rotationRadians);
+                line.setStartX(rotatedStart.getX());
+                line.setStartY(rotatedStart.getY());
+                line.setEndX(rotatedEnd.getX());
+                line.setEndY(rotatedEnd.getY());
             }
             asterism.setLabelPos();
         }
+    }
+
+    /**
+     * Helper Method for rotate to rotate a specific point around a specific point of rotation by the specified degrees.
+     *
+     * @param initialX The original X value of the point to be rotated
+     * @param initialY The original Y value of the point to be rotated
+     * @param rotationRadians The amount of radians the point is to be rotated.
+     * @return
+     */
+    private Point2D rotatePoint(double initialX, double initialY, double rotationRadians) {
+        double tempX = initialX - Constants.NCP_X;
+        double tempY = initialY - Constants.NCP_Y;
+        return new Point2D(tempX * Math.cos(rotationRadians) - tempY * Math.sin(rotationRadians) + Constants.NCP_X,
+                tempX * Math.sin(rotationRadians) + tempY * Math.cos(rotationRadians) + Constants.NCP_Y);
     }
 
     /**

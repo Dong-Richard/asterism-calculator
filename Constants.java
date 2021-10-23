@@ -46,9 +46,11 @@ public class Constants {
      * THE FOLLOWING ARE INTIIAL COORDINATE DEFINITIONS FOR THE STARS IN EACH ASTERISM OR CONSTELLATION.
      */
 
+    public static final double ZENITH_ALTITUDE = 90.0;
+
     //define zenith
     public static final double ZENITH_X = APP_WIDTH / 2;
-    public static final double ZENITH_Y = CARTOON_PANE_HEIGHT - 90.0 * SCALE_FACTOR;
+    public static final double ZENITH_Y = CARTOON_PANE_HEIGHT - ZENITH_ALTITUDE * SCALE_FACTOR;
 
     //define Celestial Pole Coordinates
     public static final double NCP_X = APP_WIDTH / 2;
