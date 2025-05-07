@@ -25,7 +25,7 @@ OVERVIEW:
 My Cartoon has 6 classes which interact in the following ways:
     - App contains a PaneOragnizer
     - PaneOrganizer contains a BorderPane, which is associated with a Pane (Pane with all of the shapes) and Vbox
-    (Pane with control and instructions)
+    (Pane with control and instructions)Sin
     - Cartoon, the main logic class, is associated with the shape Pane, and control VBox. It also contains an instance
     of NightSky, the main composite shape class, a TimeLine to control automatic movement, a Label to display the time,
     a BigDecimal to store the precise time, and an integer to store the multiplier by which the speed of the sky
@@ -45,7 +45,7 @@ My Cartoon has 6 classes which interact in the following ways:
         latitude of Providence, RI. Therefore, I chose to use Alt-Az.
         - The Altitude-Azimuth system describes points on the Celestial dome with two values: Altitude and Azimuth,
         both in units of degrees, with 90 degrees altitude being set to the point directly overhead, the zenith, and
-        decreases to 0 degrees at the horizon. Azimuth is defined with 90 degrees being directly north, and increases
+        decreases to 0 degrees at the horizon. Azimuth is defined with 0 degrees being directly north, and increases
         West to East until it circles back 360 degrees. In terms of spherical coordinates, Altitude is synonymous to
         phi and Azimuth to theta.
         - When representing a spherical surface on a 2D surface, we have to take its cross-sectional surface, which
@@ -129,8 +129,8 @@ My Cartoon has 6 classes which interact in the following ways:
     and to the right of the observer, respectively. These points may not all be visible if the user decides to change
     the apparent FOV of the program to be smaller than the full celestial dome.
 
-KNOWN BUGS: None/
+KNOWN BUGS: None
 
 Debugging Collaborators: None
 
-Hours Spent: 18
+Hours Spent: 20
